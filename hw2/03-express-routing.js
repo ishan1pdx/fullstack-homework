@@ -27,7 +27,42 @@ app.get('/', (req, res) => {
   res.send('Express Routing Exercise');
 });
 
-// Add your code here
+
+app.get('/welcome', (req, res) => {
+  res.status(200);
+  res.type('html');
+  res.send('<h1>Welcome to my Express.js website!</h1>');
+});
+
+app.get('/redirect', (req, res) => {
+  res.redirect(302, '/redirected');
+});
+
+app.get('/redirected', (req, res) => {
+  res.status(200);
+  res.type('html');
+  res.send('<h1>You have been redirected!</h1>');
+});
+
+app.get('/cache', (req, res) => {
+  res.set('Cache-Control', 'max-age=86400');
+  res.status(200);
+  res.type('html');
+  res.send('<p>this resource was cached</p>');
+});
+
+app.get('/cookie', (req, res) => {
+  res.cookie('hello', 'world');
+  res.status(200);
+  res.type('text');
+  res.send('cookies… yummm');
+});
+
+app.use((req, res) => {
+  res.status(404);
+  res.type('html');
+  res.send('<h1>404 - page not found</h1>');
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
